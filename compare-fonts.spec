@@ -96,6 +96,8 @@ mkdir -p %{buildroot}%{_bindir}
 %if %{defined fedora} || 0%{?rhel} >= 9
 %ghc_set_gcc_flags
 %cabal_install install --install-method=copy --enable-executable-stripping --installdir=%{buildroot}%{_bindir}
+# cabal not stripping in copr
+strip %{buildroot}%{_bindir}/%{name}
 %else
 for i in .cabal-sandbox/bin/*; do
 strip -s -o %{buildroot}%{_bindir}/$(basename $i) $i
